@@ -1,1 +1,13 @@
-Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Name Version -ErrorAction SilentlyContinue | Where-Object { $_.Version -match '^\d+\.\d+' } | Select-Object -Property PSChildName, Version
+# Définir la nouvelle résolution (largeur x hauteur)
+$width = 1920
+$height = 1080
+
+# Nom du moniteur cible (peut varier selon votre configuration)
+$monitorName = "\\.\DISPLAY2"
+
+# Utilisation de Set-DisplayResolution pour changer la résolution du moniteur cible
+Set-DisplayResolution -Width $width -Height $height -Force -ComputerName $monitorName
+
+# Redémarrer l'explorateur Windows pour appliquer les modifications
+Stop-Process -Name explorer -Force
+Start-Process explorer
